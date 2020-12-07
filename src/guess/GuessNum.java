@@ -39,11 +39,11 @@ public class GuessNum {
                 System.out.printf("You lost.My number was %d\n", myNum);
             }
             userChoice = askYesOrNo("Would you like to play again?");
-            if (userChoice = false) {
+            if (!userChoice) {
                 System.out.println("Bye ," + userName);
                 break;
             }
-        } while(userChoice = true);
+        } while(userChoice);
     }
     public static int askNumber(String msg, int min, int max) {
         while (true) {
