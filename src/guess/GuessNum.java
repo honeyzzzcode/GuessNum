@@ -11,6 +11,7 @@ public class GuessNum {
 
         Random random = new Random();
         String userName;
+        boolean userChoice;
         do {
             System.out.println("What is your name?");
             userName = scanner.next();
@@ -29,7 +30,7 @@ public class GuessNum {
                 } else if (myNum > userNum) {
                     System.out.println(userName + ", Your number is too low");
                 } else {
-                    System.out.println(userName + " You won! %d attempts were used.\n");
+                    System.out.printf(userName + " You won! %d attempts were used.\n", i);
                     userWin = true;
                     break;
                 }
@@ -37,11 +38,13 @@ public class GuessNum {
             if (!userWin) {
                 System.out.printf("You lost.My number was %d\n", myNum);
             }
-            askYesOrNo("Would you like to play again?");
-        } while (!scanner.next().equals("no"));
-        System.out.println("Bye ," + userName);
+            userChoice = askYesOrNo("Would you like to play again?");
+            if (userChoice = false) {
+                System.out.println("Bye ," + userName);
+                break;
+            }
+        } while(userChoice = true);
     }
-
     public static int askNumber(String msg, int min, int max) {
         while (true) {
             System.out.println(msg + ":");
@@ -62,23 +65,19 @@ public class GuessNum {
             }
         }
     }
-
-
     public static Boolean askYesOrNo(String msg) {
-        boolean yesorno = true;
-        while (true) {
+        boolean yesorno;
+        while(true) {
             System.out.println(msg + "(Yes or No)?");
             String result = scanner.next();
-                if (result.equalsIgnoreCase("No")) {
-                    yesorno = false;
-                    break;
-
-                } else if (result.equalsIgnoreCase("yes")){
-                    yesorno = true;
-                    break;
-
-                }
-
-        }return yesorno;
+            if (result.equalsIgnoreCase("No")) {
+                yesorno = false;
+                break;
+            } else if (result.equalsIgnoreCase("yes")) {
+                yesorno = true;
+                break;
+            }
+        }
+        return yesorno;
     }
 }
