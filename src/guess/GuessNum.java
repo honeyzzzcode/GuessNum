@@ -1,24 +1,24 @@
 package guess;
 
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class GuessNum {
     static Scanner scanner = new Scanner(System.in);
+    private static final ArrayList<GameResult> leaderboard = new ArrayList<>();
+
 
     public static void main(String[] args) {
-
+        boolean userChoice;
         Random random = new Random();
         String userName;
-        boolean userChoice;
         do {
             System.out.println("What is your name?");
             userName = scanner.next();
             int myNum = random.nextInt(100) + 1;
 
             System.out.println("Hello , " + userName + " !");
-            System.out.println("I am thinking of number from 1 to 100, try to guess it!");
+            System.out.println("I am thinking of number from 1 to 100, try to guess it!" + myNum);
+           long startTime = System.currentTimeMillis();
             boolean userWin = false;
 
             for (int i = 1; i <= 10; i++) {
@@ -30,6 +30,14 @@ public class GuessNum {
                 } else if (myNum > userNum) {
                     System.out.println(userName + ", Your number is too low");
                 } else {
+                    long endTime = System.currentTimeMillis();
+                    GameResult gr = new GameResult();
+                    gr.setName(userName);
+                    gr.setAttempts(i);
+                    gr.setDuration(endTime - startTime);
+
+                    leaderboard.add(gr);
+
                     System.out.printf(userName + " You won! %d attempts were used.\n", i);
                     userWin = true;
                     break;
@@ -43,8 +51,23 @@ public class GuessNum {
                 System.out.println("Bye ," + userName);
                 break;
             }
-        } while(userChoice);
+        } while (true);
+        Pleaderboard();
     }
+
+    private static void Pleaderboard() {
+        leaderboard.sort(
+                Comparator
+                .comparingInt(GameResult::getAttempts )
+                .thenComparingLong(GameResult::getDuration)
+        );
+        System.out.printf("NAME  \t              ATTEMPTS \t            DURATION\n" );
+        for (GameResult gr : leaderboard) {
+
+            System.out.printf("  %-15s \t    %-15d \t %.1f%n \n ", gr.getName(), gr.getAttempts() , gr.getDuration()/1000.0);
+        }
+    }
+
     public static int askNumber(String msg, int min, int max) {
         while (true) {
             System.out.println(msg + ":");
@@ -65,9 +88,10 @@ public class GuessNum {
             }
         }
     }
+
     public static Boolean askYesOrNo(String msg) {
         boolean yesorno;
-        while(true) {
+        while (true) {
             System.out.println(msg + "(Yes or No)?");
             String result = scanner.next();
             if (result.equalsIgnoreCase("No")) {
