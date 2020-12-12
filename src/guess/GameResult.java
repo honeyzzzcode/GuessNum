@@ -3,8 +3,9 @@ package guess;
 public class GameResult {
     private String name;
     private int attempts;
-private long duration;
-private long starttime;
+    private long duration;
+    private long starttime;
+
     public String getName() {
         return name;
 
@@ -17,9 +18,11 @@ private long starttime;
     public int getAttempts() {
         return attempts;
     }
+
     public void setAttempts(int attempts) {
         this.attempts = attempts;
     }
+
     public long getDuration() {
         return duration;
     }
